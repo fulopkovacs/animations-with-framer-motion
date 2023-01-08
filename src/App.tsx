@@ -1,6 +1,13 @@
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import {useState} from 'react'
 import {GridIcon, RowsIcon} from '@radix-ui/react-icons'
+import {motion} from 'framer-motion'
+
+const spring = {
+  type: 'spring',
+  stiffness: 700,
+  damping: 30,
+}
 
 function App() {
   const [assetsLayout, setAssetsLayout] = useState<'grid' | 'rows'>('grid')
@@ -13,7 +20,17 @@ function App() {
 
   return (
     <div className="App w-full h-full bg-gray-900 min-h-screen flex items-center gap-4 flex-col pt-10">
-      <div className="text-gray-500">
+      <div className="text-gray-500 relative">
+        <div
+          className={`absolute top-0 left-0 h-full w-full flex pointer-events-none ${
+            assetsLayout === 'grid' ? 'justify-start' : 'justify-end'
+          }`}
+        >
+          <motion.div
+            layout
+            className="aspect-square h-full bg-gray-600 opacity-80 rounded-sm"
+          ></motion.div>
+        </div>
         <ToggleGroup.Root
           type="single"
           defaultValue="grid"
@@ -29,14 +46,18 @@ function App() {
             aria-label="grid"
             className="transition-colors data-[state=on]:text-yellow-300"
           >
-            <GridIcon className="h-5 w-5" />
+            <div className="h-5 w-5 relative m-1">
+              <GridIcon className="absolute top-0 left-0 h-full w-full" />
+            </div>
           </ToggleGroup.Item>
           <ToggleGroup.Item
             value="rows"
             aria-label="rows"
             className="transition-colors data-[state=on]:text-yellow-300"
           >
-            <RowsIcon className="h-5 w-5" />
+            <div className="h-5 w-5 relative m-1">
+              <RowsIcon className="absolute top-0 left-0 h-full w-full" />
+            </div>
           </ToggleGroup.Item>
         </ToggleGroup.Root>
       </div>
@@ -46,12 +67,14 @@ function App() {
         }`}
       >
         {itemsArray.map((val) => (
-          <div
+          <motion.div
+            layout
+            transition={spring}
             key={val}
             className="w-10 h-10 bg-yellow-300 flex justify-center items-center rounded-sm"
           >
             {val}
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
