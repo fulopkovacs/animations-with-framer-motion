@@ -12,7 +12,7 @@ function App() {
   }
 
   return (
-    <div className="App w-full h-full bg-gray-900 min-h-screen flex items-center justify-center gap-4 flex-col">
+    <div className="App w-full h-full bg-gray-900 min-h-screen flex items-center gap-4 flex-col pt-10">
       <div className="text-gray-500">
         <ToggleGroup.Root
           type="single"
@@ -40,7 +40,11 @@ function App() {
           </ToggleGroup.Item>
         </ToggleGroup.Root>
       </div>
-      <div className="text-black font-bold grid grid-cols-3 gap-2">
+      <div
+        className={`text-black font-bold grid gap-2 ${
+          assetsLayout === 'grid' ? 'grid-cols-3' : 'grid-cols-1'
+        }`}
+      >
         {itemsArray.map((val) => (
           <div
             key={val}
